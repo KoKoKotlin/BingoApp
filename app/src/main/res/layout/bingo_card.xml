@@ -3,117 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="2dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="#61C4A8"
-    app:cardElevation="2dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="@android:color/white">
+    android:layout_height="180dp"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@color/teal_600">
 
-    <androidx.gridlayout.widget.GridLayout
-        android:id="@+id/bingoGrid"
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:columnCount="6"
-        app:rowCount="3"
-        app:alignmentMode="alignBounds"
-        app:columnOrderPreserved="false"
-        app:rowOrderPreserved="false">
+        android:columnCount="6"
+        android:rowCount="3">
 
-        <TextView
-            android:id="@+id/cell_0"
-            style="@style/BingoCellStyle"
-            android:text="12" />
-
-        <TextView
-            android:id="@+id/cell_1"
-            style="@style/BingoCellStyle"
-            android:text="5" />
-
-        <TextView
-            android:id="@+id/cell_2"
-            style="@style/BingoCellStyle"
-            android:text="27" />
-
-        <TextView
-            android:id="@+id/cell_3"
-            style="@style/BingoCellStyle"
-            android:text="41" />
-
-        <TextView
-            android:id="@+id/cell_4"
-            style="@style/BingoCellStyle"
-            android:text="63" />
-
-        <TextView
-            android:id="@+id/cell_5"
-            style="@style/BingoCellStyle"
-            android:text="8" />
-
-        <!-- Second row -->
-        <TextView
-            android:id="@+id/cell_6"
-            style="@style/BingoCellStyle"
-            android:text="19" />
-
-        <TextView
-            android:id="@+id/cell_7"
-            style="@style/BingoCellStyle"
-            android:text="33" />
-
-        <TextView
-            android:id="@+id/cell_8"
-            style="@style/BingoCellStyle"
-            android:text="56" />
-
-        <TextView
-            android:id="@+id/cell_9"
-            style="@style/BingoCellStyle"
-            android:text="72" />
-
-        <TextView
-            android:id="@+id/cell_10"
-            style="@style/BingoCellStyle"
-            android:text="44" />
-
-        <TextView
-            android:id="@+id/cell_11"
-            style="@style/BingoCellStyle"
-            android:text="29" />
-
-        <!-- Third row -->
-        <TextView
-            android:id="@+id/cell_12"
-            style="@style/BingoCellStyle"
-            android:text="67" />
-
-        <TextView
-            android:id="@+id/cell_13"
-            style="@style/BingoCellStyle"
-            android:text="3" />
-
-        <TextView
-            android:id="@+id/cell_14"
-            style="@style/BingoCellStyle"
-            android:text="50" />
-
-        <TextView
-            android:id="@+id/cell_15"
-            style="@style/BingoCellStyle"
-            android:text="21" />
-
-        <TextView
-            android:id="@+id/cell_16"
-            style="@style/BingoCellStyle"
-            android:text="38" />
-
-        <TextView
-            android:id="@+id/cell_17"
-            style="@style/BingoCellStyle"
-            android:text="74" />
-
-    </androidx.gridlayout.widget.GridLayout>
-
+        <TextView android:id="@+id/mini_0"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_1"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_2"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_3"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_4"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_5"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_6"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_7"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_8"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_9"  style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_10" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_11" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_12" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_13" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_14" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_15" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_16" style="@style/MiniBingoCell" />
+        <TextView android:id="@+id/mini_17" style="@style/MiniBingoCell" />
+    </GridLayout>
 </androidx.cardview.widget.CardView>

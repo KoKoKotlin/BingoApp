@@ -41,7 +41,6 @@ class CreateCardActivity : AppCompatActivity() {
             putExtra("NEW_BINGO_CARD", bingoCard)
         }
         setResult(RESULT_OK, intentResult)
-        Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
         finish()
     }
 }

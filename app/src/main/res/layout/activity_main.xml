@@ -5,32 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp">
-
-        <LinearLayout
-            android:id="@+id/cardContainer"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"
-            android:showDividers="none"
-            android:gravity="top"/>
-    </ScrollView>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addCardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="Add Card"
-        android:src="@android:drawable/ic_input_add"
         android:onClick="onClickAddCard"
+        android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/teal_600"
         app:layout_anchorGravity="bottom|end"
-        app:layout_anchor="@id/cardContainer"
-        />
+        app:layout_anchor="@id/rv_bingo_cards"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_bingo_cards"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

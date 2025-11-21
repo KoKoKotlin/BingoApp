@@ -24,9 +24,9 @@
             <EditText android:id="@+id/edit_4"  style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_5"  style="@style/BingoInputStyle" android:hint="\?" />
 
+            <EditText android:id="@+id/edit_6"  style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_7"  style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_8"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_6"  style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_9"  style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_10" style="@style/BingoInputStyle" android:hint="\?" />
             <EditText android:id="@+id/edit_11" style="@style/BingoInputStyle" android:hint="\?" />
