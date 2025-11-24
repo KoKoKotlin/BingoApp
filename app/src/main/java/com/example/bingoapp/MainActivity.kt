@@ -27,14 +27,18 @@ class MainActivity : AppCompatActivity() {
     val numbers: MutableList<UInt>
         get() = _numbers
 
+    fun resortCards() {
+        bingoCards.sortByDescending { c -> c.markedCount(numbers) }
+        adapter.notifyDataSetChanged()
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val startForResultCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
             it.data?.getParcelableExtra("NEW_BINGO_CARD", BingoCard::class.java)
                 ?.let(bingoCards::add)
-            adapter.notifyItemInserted(bingoCards.lastIndex)
-            binding.rvBingoCards.smoothScrollToPosition(bingoCards.lastIndex)
+            resortCards()
         } else {
             Toast.makeText(this, "Canceled creating a new card!", Toast.LENGTH_SHORT).show()
         }
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         if (it.resultCode == RESULT_OK) {
             it.data?.getIntegerArrayListExtra("numbers")
                 ?.let { ns -> _numbers.clear(); _numbers.addAll(ns.map{ k -> k.toUInt() }) }
-            adapter.notifyDataSetChanged()
+            resortCards()
         }
     }
 
@@ -80,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 val number = editText.text.toString().toIntOrNull()
                 if (number != null && number in 1..99) {
                     _numbers.add(number.toUInt())
-                    adapter.notifyDataSetChanged()
+                    resortCards()
                 } else {
                     Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
                 }
