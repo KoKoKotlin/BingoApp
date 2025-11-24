@@ -17,6 +17,8 @@ import com.example.bingoapp.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     private val _numbers = mutableListOf<UInt>()
     val numbers: MutableList<UInt>
         get() = _numbers
+
+    private val gson = Gson()
+    private val prefs by lazy { getSharedPreferences("BingoApp", MODE_PRIVATE) }
 
     fun resortCards() {
         bingoCards.sortByDescending { c -> c.markedCount(numbers) }
@@ -51,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             resortCards()
         }
     }
-
 
     private fun showAddNumberDialog() {
         val textInputLayout = TextInputLayout(this).apply {
@@ -112,10 +116,31 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        with(prefs.edit()) {
+            putString("cards", gson.toJson(bingoCards))
+            putString("numbers", gson.toJson(numbers))
+            apply()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val cardsJson = prefs.getString("cards", null)
+        if (cardsJson != null) {
+            val type = object: TypeToken<List<BingoCard>>() {}.type;
+            bingoCards.addAll(gson.fromJson(cardsJson, type))
+        }
+
+        val numbersJson = prefs.getString("numbers", null)
+        if (numbersJson != null) {
+            val type = object: TypeToken<List<UInt>>() {}.type;
+            numbers.addAll(gson.fromJson<List<UInt>>(numbersJson, type))
+        }
 
         adapter = BingoCardMiniAdapter(bingoCards, this)
         binding.rvBingoCards.layoutManager = GridLayoutManager(this, 1)
