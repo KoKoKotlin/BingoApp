@@ -51,5 +51,12 @@
             android:text="Create Card"
             android:onClick="onCreateCard"
             android:layout_marginTop="24dp"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:onClick="onCancel"
+            android:layout_marginTop="24dp"/>
     </LinearLayout>
 </ScrollView>

@@ -27,12 +27,14 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
         if (it.resultCode == RESULT_OK) {
+            Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
             it.data?.getParcelableExtra("NEW_BINGO_CARD", BingoCard::class.java)
                 ?.let(bingoCards::add)
             adapter.notifyItemInserted(bingoCards.lastIndex)
             binding.rvBingoCards.smoothScrollToPosition(bingoCards.lastIndex)
+        } else {
+            Toast.makeText(this, "Canceled creating a new card!", Toast.LENGTH_SHORT).show()
         }
     }
 

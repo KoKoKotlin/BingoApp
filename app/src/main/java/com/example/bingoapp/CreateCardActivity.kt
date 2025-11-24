@@ -20,6 +20,12 @@ class CreateCardActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+
+    fun onCancel(view: View) {
+        setResult(RESULT_CANCELED)
+        finish()
+    }
+
     fun onCreateCard(view: View) {
         val editTexts = listOf(
             binding.edit0, binding.edit1, binding.edit2, binding.edit3, binding.edit4, binding.edit5,
