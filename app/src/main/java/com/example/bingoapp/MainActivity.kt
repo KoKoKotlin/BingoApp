@@ -23,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val bingoCards: MutableList<BingoCard> = mutableListOf()
     private lateinit var adapter: BingoCardMiniAdapter
-    private val numbers = mutableListOf<UInt>()
+    private val _numbers = mutableListOf<UInt>()
+    val numbers: MutableList<UInt>
+        get() = _numbers
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val startForResultCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -41,7 +43,8 @@ class MainActivity : AppCompatActivity() {
     val startForResultNumbers = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             it.data?.getIntegerArrayListExtra("numbers")
-                ?.let { ns -> numbers.clear(); numbers.addAll(ns.map{ k -> k.toUInt() }) }
+                ?.let { ns -> _numbers.clear(); _numbers.addAll(ns.map{ k -> k.toUInt() }) }
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -76,7 +79,8 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("Add") { _, _ ->
                 val number = editText.text.toString().toIntOrNull()
                 if (number != null && number in 1..99) {
-                    numbers.add(number.toUInt())
+                    _numbers.add(number.toUInt())
+                    adapter.notifyDataSetChanged()
                 } else {
                     Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
                 }
@@ -100,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickEditNumbers(view: View) {
         startForResultNumbers.launch(Intent(this, NumbersManagerActivity::class.java).apply {
-            putIntegerArrayListExtra("numbers", ArrayList(numbers.map { it.toInt() }))
+            putIntegerArrayListExtra("numbers", ArrayList(_numbers.map { it.toInt() }))
         })
     }
 

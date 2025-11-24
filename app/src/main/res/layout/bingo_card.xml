@@ -19,24 +19,78 @@
             android:columnCount="6"
             android:rowCount="3">
 
-            <TextView android:id="@+id/mini_0"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_1"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_2"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_3"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_4"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_5"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_6"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_7"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_8"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_9"  style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_10" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_11" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_12" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_13" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_14" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_15" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_16" style="@style/MiniBingoCell" />
-            <TextView android:id="@+id/mini_17" style="@style/MiniBingoCell" />
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_0" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_0" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_1" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_1" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_2" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_2" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_3" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_3" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_4" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_4" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_5" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_5" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_6" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_6" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_7" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_7" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_8" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_8" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_9" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_9" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_10" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_10" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_11" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_11" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_12" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_12" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_13" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_13" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_14" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_14" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_15" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_15" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_16" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_16" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+            <FrameLayout style="@style/MiniBingoCell">
+                <TextView android:id="@+id/mini_17" style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_17" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
         </GridLayout>
 
         <com.google.android.material.button.MaterialButton
