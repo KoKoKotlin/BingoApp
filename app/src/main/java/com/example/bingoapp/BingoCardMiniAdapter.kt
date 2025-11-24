@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bingoapp.databinding.BingoCardBinding
 
 class BingoCardMiniAdapter(
-    private val cards: List<BingoCard>
+    private val cards: List<BingoCard>,
+    private val main: MainActivity
 ): RecyclerView.Adapter<BingoCardMiniAdapter.ViewHolder>() {
     class ViewHolder(val binding: BingoCardBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -22,6 +23,9 @@ class BingoCardMiniAdapter(
         }
 
         card.values.forEachIndexed { index, i -> miniCells[index].text = i?.toString() ?: "-" }
+        holder.binding.btnDeleteCard.setOnClickListener {
+            main.onDeleteCard(position)
+        }
     }
 
     override fun getItemCount() = cards.size

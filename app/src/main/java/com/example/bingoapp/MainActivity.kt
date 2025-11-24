@@ -78,12 +78,24 @@ class MainActivity : AppCompatActivity() {
 
         editText.requestFocus()
     }
+    fun onDeleteCard(index: Int) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Delete card?")
+            .setMessage("Are you sure you want to delete bingo card with id ${bingoCards[index].id}?")
+            .setPositiveButton("Delete") { _, _ ->
+                bingoCards.removeAt(index)
+                adapter.notifyItemRemoved(index)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = BingoCardMiniAdapter(bingoCards)
+        adapter = BingoCardMiniAdapter(bingoCards, this)
         binding.rvBingoCards.layoutManager = GridLayoutManager(this, 1)
         binding.rvBingoCards.adapter = adapter
     }

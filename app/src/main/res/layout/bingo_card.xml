@@ -8,30 +8,51 @@
     app:cardCornerRadius="12dp"
     app:cardElevation="6dp"
     app:cardBackgroundColor="@color/teal_600">
-
-    <GridLayout
+    <!-- Use FrameLayout or ConstraintLayout or RelativeLayout to overlay the delete button -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="6"
-        android:rowCount="3">
+        android:layout_height="match_parent">
 
-        <TextView android:id="@+id/mini_0"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_1"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_2"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_3"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_4"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_5"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_6"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_7"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_8"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_9"  style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_10" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_11" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_12" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_13" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_14" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_15" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_16" style="@style/MiniBingoCell" />
-        <TextView android:id="@+id/mini_17" style="@style/MiniBingoCell" />
-    </GridLayout>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="6"
+            android:rowCount="3">
+
+            <TextView android:id="@+id/mini_0"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_1"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_2"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_3"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_4"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_5"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_6"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_7"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_8"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_9"  style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_10" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_11" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_12" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_13" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_14" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_15" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_16" style="@style/MiniBingoCell" />
+            <TextView android:id="@+id/mini_17" style="@style/MiniBingoCell" />
+        </GridLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_card"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            app:backgroundTint="@color/red_600"
+            app:icon="@android:drawable/ic_delete"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconTint="@android:color/white"
+            app:strokeWidth="0dp" />
+    </FrameLayout>
 </androidx.cardview.widget.CardView>
