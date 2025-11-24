@@ -5,17 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addCardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:contentDescription="Add Card"
+        android:text="Add Card"
         android:onClick="onClickAddCard"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/teal_600"
         app:layout_anchorGravity="bottom|end"
         app:layout_anchor="@id/rv_bingo_cards"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/addNumberButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="Add Number"
+        android:text="Add Number"
+        android:onClick="onClickAddNumber"
+        app:backgroundTint="@color/teal_600"
+        app:layout_anchorGravity="bottom"
+        app:layout_anchor="@id/rv_bingo_cards"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bingo_cards"
