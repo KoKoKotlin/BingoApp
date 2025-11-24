@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val numbers = mutableListOf<UInt>()
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    val startForResultCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
             it.data?.getParcelableExtra("NEW_BINGO_CARD", BingoCard::class.java)
@@ -37,6 +37,14 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Canceled creating a new card!", Toast.LENGTH_SHORT).show()
         }
     }
+
+    val startForResultNumbers = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            it.data?.getIntegerArrayListExtra("numbers")
+                ?.let { ns -> numbers.clear(); numbers.addAll(ns.map{ k -> k.toUInt() }) }
+        }
+    }
+
 
     private fun showAddNumberDialog() {
         val textInputLayout = TextInputLayout(this).apply {
@@ -90,6 +98,12 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    fun onClickEditNumbers(view: View) {
+        startForResultNumbers.launch(Intent(this, NumbersManagerActivity::class.java).apply {
+            putIntegerArrayListExtra("numbers", ArrayList(numbers.map { it.toInt() }))
+        })
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -102,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun onClickAddCard(view: View) {
-        startForResult.launch(Intent(this, CreateCardActivity::class.java))
+        startForResultCard.launch(Intent(this, CreateCardActivity::class.java))
     }
 
     fun onClickAddNumber(view: View) {

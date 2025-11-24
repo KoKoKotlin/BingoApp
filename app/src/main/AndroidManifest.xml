@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BingoApp">
         <activity
+            android:name=".NumbersManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateCardActivity"
             android:exported="false" />
         <activity

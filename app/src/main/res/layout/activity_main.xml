@@ -30,6 +30,17 @@
         app:layout_anchorGravity="bottom"
         app:layout_anchor="@id/rv_bingo_cards"/>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/editNumberButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="Edit Numbers"
+        android:text="Edit Numbers"
+        android:onClick="onClickEditNumbers"
+        app:backgroundTint="@color/teal_600"
+        app:layout_anchorGravity="bottom|center"
+        app:layout_anchor="@id/rv_bingo_cards"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bingo_cards"
