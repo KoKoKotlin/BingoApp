@@ -9,54 +9,93 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/bingo_card"
+            layout="@layout/bingo_card"/>
+
         <GridLayout
-            android:id="@+id/inputGrid"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="6"
-            android:rowCount="3">
+            android:columnCount="4"
+            android:rowCount="3"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/btn1"
+                style="@style/BingoCardNumberBtn"
+                android:text="1" />
+            <Button
+                android:id="@+id/btn2"
+                style="@style/BingoCardNumberBtn"
+                android:text="2" />
+            <Button
+                android:id="@+id/btn3"
+                style="@style/BingoCardNumberBtn"
+                android:text="3" />
+            <Button
+                android:id="@+id/btnNull"
+                style="@style/BingoCardNumberBtn"
+                android:text="-"/>
+            <Button
+                android:id="@+id/btn4"
+                style="@style/BingoCardNumberBtn"
+                android:text="4"/>
+            <Button
+                android:id="@+id/btn5"
+                style="@style/BingoCardNumberBtn"
+                android:text="5"/>
+            <Button
+                android:id="@+id/btn6"
+                style="@style/BingoCardNumberBtn"
+                android:text="6"/>
+            <Button
+                style="@style/BingoCardNumberBtn"
+                android:visibility="invisible"
+                android:text=""/>
+            <Button
+                android:id="@+id/btn7"
+                style="@style/BingoCardNumberBtn"
+                android:text="7"/>
+            <Button
+                android:id="@+id/btn8"
+                style="@style/BingoCardNumberBtn"
+                android:text="8"/>
+            <Button
+                android:id="@+id/btn9"
+                style="@style/BingoCardNumberBtn"
+                android:text="9"/>
+            <Button
+                android:id="@+id/btn0"
+                style="@style/BingoCardNumberBtn"
+                android:text="0"/>
 
-            <!-- 18 EditTexts – generated below for brevity -->
-            <EditText android:id="@+id/edit_0"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_1"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_2"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_3"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_4"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_5"  style="@style/BingoInputStyle" android:hint="\?" />
-
-            <EditText android:id="@+id/edit_6"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_7"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_8"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_9"  style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_10" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_11" style="@style/BingoInputStyle" android:hint="\?" />
-
-            <EditText android:id="@+id/edit_12" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_13" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_14" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_15" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_16" style="@style/BingoInputStyle" android:hint="\?" />
-            <EditText android:id="@+id/edit_17" style="@style/BingoInputStyle" android:hint="\?" />
         </GridLayout>
+
         <EditText
             android:id="@+id/bingo_card_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Bingo Card Id"
             android:inputType="number"/>
-        <Button
-            android:id="@+id/btnCreateCard"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Card"
-            android:onClick="onCreateCard"
-            android:layout_marginTop="24dp"/>
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:onClick="onCancel"
-            android:layout_marginTop="24dp"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:onClick="onCancel"/>
+            <Button
+                android:id="@+id/btnCreateCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Create Card"
+                android:onClick="onCreateCard"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
