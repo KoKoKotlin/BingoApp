@@ -37,6 +37,7 @@ class BingoCardMiniAdapter(
         holder.binding.btnDeleteCard.setOnClickListener {
             main.onDeleteCard(position)
         }
+        holder.binding.textCardId.text = "Id: ${card.id}"
     }
 
     override fun getItemCount() = cards.size
