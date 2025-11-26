@@ -6,47 +6,60 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/addCardButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Add Card"
-        android:text="Add Card"
-        android:onClick="onClickAddCard"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/teal_600"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_anchor="@id/rv_bingo_cards"/>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/addNumberButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Add Number"
-        android:text="Add Number"
-        android:onClick="onClickAddNumber"
-        app:backgroundTint="@color/teal_600"
-        app:layout_anchorGravity="bottom"
-        app:layout_anchor="@id/rv_bingo_cards"/>
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/editNumberButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:contentDescription="Edit Numbers"
-        android:text="Edit Numbers"
-        android:onClick="onClickEditNumbers"
-        app:backgroundTint="@color/teal_600"
-        app:layout_anchorGravity="bottom|center"
-        app:layout_anchor="@id/rv_bingo_cards"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bingo_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"/>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addCardButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Card"
+            app:backgroundTint="@color/teal_600"
+            android:onClick="onClickAddCard" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addNumberButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Add Number"
+            android:maxLines="2"
+            app:backgroundTint="@color/teal_600"
+            android:onClick="onClickAddNumber" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/editNumberButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="2"
+            android:text="Edit Numbers"
+            app:backgroundTint="@color/teal_600"
+            android:onClick="onClickEditNumbers" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="@android:color/white"
+            app:backgroundTint="@color/red_600"
+            android:onClick="onClickClearAll"
+            android:contentDescription="Clear all"/>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

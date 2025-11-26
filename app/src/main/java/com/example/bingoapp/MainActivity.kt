@@ -116,6 +116,19 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun onClickClearAll(view: View) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Clear all?")
+            .setMessage("Are you sure you want to delete all data?")
+            .setPositiveButton("Delete") { _, _ ->
+                bingoCards.clear()
+                numbers.clear()
+                adapter.notifyDataSetChanged()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
     override fun onPause() {
         super.onPause()
 
