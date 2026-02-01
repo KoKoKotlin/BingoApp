@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     private val gson = Gson()
     private val prefs by lazy { getSharedPreferences("BingoApp", MODE_PRIVATE) }
 
+    // TODO: customize
+    private val blackBoardWidth = 8
+    private val blackBoardHeight = 16
+
     fun resortCards() {
         bingoCards.sortByDescending { c -> c.markedCount(numbers) }
         adapter.notifyDataSetChanged()
@@ -113,6 +117,8 @@ class MainActivity : AppCompatActivity() {
     fun onClickEditNumbers(view: View) {
         startForResultNumbers.launch(Intent(this, NumbersManagerActivity::class.java).apply {
             putIntegerArrayListExtra("numbers", ArrayList(_numbers.map { it.toInt() }))
+            putExtra("width", blackBoardWidth)
+            putExtra("height", blackBoardHeight)
         })
     }
 

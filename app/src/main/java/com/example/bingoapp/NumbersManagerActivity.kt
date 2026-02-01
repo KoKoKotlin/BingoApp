@@ -2,91 +2,103 @@ package com.example.bingoapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.text.InputFilter
+import android.text.InputType
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
-import com.example.bingoapp.databinding.ActivityMainBinding
 import com.example.bingoapp.databinding.ActivityNumbersManagerBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class NumbersManagerActivity: AppCompatActivity() {
-    private lateinit var adapter: NumbersAdapter
+    val numbers = mutableListOf<Int>()
+    lateinit var gridAdapter: BingoNumberAdapter
+    private lateinit var binding: ActivityNumbersManagerBinding
 
-    private val numbers = mutableListOf<UInt>()
+    private fun showEditDialog(position: Int) {
+        val textInputLayout = TextInputLayout(this).apply {
+            hint = "Number (1–99)"
+            boxBackgroundMode = TextInputLayout.BOX_BACKGROUND_OUTLINE
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        val editText = TextInputEditText(this).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            filters = arrayOf(InputFilter.LengthFilter(2))
+        }
+        textInputLayout.addView(editText)
+
+        val container = FrameLayout(this).apply {
+            addView(textInputLayout, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(50, 100, 50, 100)
+            })
+        }
+
+        MaterialAlertDialogBuilder(this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+            .setView(container)
+            .setPositiveButton("Change") { _, _ ->
+                val number = editText.text.toString().toIntOrNull()
+                if (number != null && number in 1..99) {
+                    numbers[position] = number
+                    gridAdapter.notifyDataSetChanged()
+                } else {
+                    Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+
+        editText.requestFocus()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_numbers_manager)
+        binding = ActivityNumbersManagerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val width = intent.getIntExtra("width", 6)
+        val height = intent.getIntExtra("height", 16)
+        numbers.addAll(intent.getIntegerArrayListExtra("numbers") ?: listOf())
 
-        numbers.addAll(intent.getIntegerArrayListExtra("numbers")?.map { it.toUInt()} ?: listOf())
+        gridAdapter = BingoNumberAdapter(numbers, this, width, height)
+        binding.numbersGrid.numColumns = width
+        binding.numbersGrid.adapter = gridAdapter
 
-        val recyclerView = findViewById<RecyclerView>(R.id.rv_numbers)
-        adapter = NumbersAdapter(numbers) { deletedNumber, position ->
-            numbers.add(position, deletedNumber)
-            adapter.notifyItemInserted(position)
+        binding.numbersGrid.setOnItemClickListener { _, _, position, _ ->
+            showEditDialog(position)
         }
 
-        recyclerView.adapter = adapter
+        binding.btnFinish.setOnClickListener {
+            finishIntent(false)
+        }
 
-        ItemTouchHelper(object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean = false
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                val deletedNumber = numbers.removeAt(position)
-                adapter.notifyItemRemoved(position)
-
-                Snackbar.make(recyclerView, "Number $deletedNumber removed", Snackbar.LENGTH_LONG)
-                    .setAction("UNDO") {
-                        numbers.add(position, deletedNumber)
-                        adapter.notifyItemInserted(position)
-                    }
-                    .show()
-            }
-        }).attachToRecyclerView(recyclerView)
-
-        val binding = ActivityNumbersManagerBinding.inflate(layoutInflater)
-        binding.fabClearAll.setOnClickListener {
-            if (numbers.isEmpty()) return@setOnClickListener
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Clear all numbers?")
-                .setMessage("This cannot be undone.")
-                .setPositiveButton("Clear") { _, _ ->
-                    numbers.clear()
-                    adapter.notifyDataSetChanged()
-                    Toast.makeText(this, "All numbers cleared", Toast.LENGTH_SHORT).show()
-                }
-                .setNegativeButton("Cancel", null)
-                .show()
+        binding.btnCancel.setOnClickListener {
+            finishIntent(true)
         }
     }
 
-    private fun finishIntent() {
+    private fun finishIntent(cancel: Boolean) {
         val intentResult = Intent().apply {
-            putIntegerArrayListExtra("numbers", ArrayList(numbers.map { it.toInt() }))
+            if (!cancel) {
+                putIntegerArrayListExtra("numbers", ArrayList(numbers))
+            }
         }
-        setResult(RESULT_OK, intentResult)
+        setResult(if (!cancel) RESULT_OK else RESULT_CANCELED, intentResult)
         finish()
     }
 
-    fun onClickFinish(view: View) {
-        finishIntent()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finishIntent()
-        return true
+    override fun onNavigateUp(): Boolean {
+        finishIntent(false)
+        return super.onNavigateUp()
     }
 }
