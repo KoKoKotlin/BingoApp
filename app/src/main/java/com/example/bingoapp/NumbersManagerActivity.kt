@@ -6,7 +6,6 @@ import android.text.InputFilter
 import android.text.InputType
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.GridView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bingoapp.databinding.ActivityNumbersManagerBinding
@@ -49,8 +48,12 @@ class NumbersManagerActivity: AppCompatActivity() {
             .setPositiveButton("Change") { _, _ ->
                 val number = editText.text.toString().toIntOrNull()
                 if (number != null && number in 1..99) {
-                    numbers[position] = number
-                    gridAdapter.notifyDataSetChanged()
+                    if (numbers.contains(number)) {
+                        Toast.makeText(this, "Duplicate number!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        numbers[position] = number
+                        gridAdapter.notifyDataSetChanged()
+                    }
                 } else {
                     Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
                 }

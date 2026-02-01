@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val bingoCards: MutableList<BingoCard> = mutableListOf()
     private lateinit var adapter: BingoCardMiniAdapter
-    private val _numbers = mutableListOf<UInt>()
-    val numbers: MutableList<UInt>
+    private val _numbers = mutableListOf<Int>()
+    val numbers: MutableList<Int>
         get() = _numbers
 
     private val gson = Gson()
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     val startForResultNumbers = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             it.data?.getIntegerArrayListExtra("numbers")
-                ?.let { ns -> _numbers.clear(); _numbers.addAll(ns.map{ k -> k.toUInt() }) }
+                ?.let { ns -> _numbers.clear(); _numbers.addAll(ns) }
             resortCards()
         }
     }
@@ -91,8 +91,12 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton("Add") { _, _ ->
                 val number = editText.text.toString().toIntOrNull()
                 if (number != null && number in 1..99) {
-                    _numbers.add(number.toUInt())
-                    resortCards()
+                    if (_numbers.contains(number)) {
+                        Toast.makeText(this, "Duplicate number!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        _numbers.add(number)
+                        resortCards()
+                    }
                 } else {
                     Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
                 }
@@ -151,14 +155,22 @@ class MainActivity : AppCompatActivity() {
 
         val cardsJson = prefs.getString("cards", null)
         if (cardsJson != null) {
-            val type = object: TypeToken<List<BingoCard>>() {}.type;
-            bingoCards.addAll(gson.fromJson(cardsJson, type))
+            try {
+                val type = object: TypeToken<List<BingoCard>>() {}.type;
+                bingoCards.addAll(gson.fromJson(cardsJson, type))
+            } catch (e: Exception) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+            }
         }
 
         val numbersJson = prefs.getString("numbers", null)
         if (numbersJson != null) {
-            val type = object: TypeToken<List<UInt>>() {}.type;
-            numbers.addAll(gson.fromJson<List<UInt>>(numbersJson, type))
+            try {
+                val type = object : TypeToken<List<Int>>() {}.type;
+                numbers.addAll(gson.fromJson<List<Int>>(numbersJson, type))
+            } catch (e: Exception) {
+                Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+            }
         }
 
         adapter = BingoCardMiniAdapter(bingoCards, this)

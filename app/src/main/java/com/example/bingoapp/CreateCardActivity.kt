@@ -78,16 +78,25 @@ class CreateCardActivity : AppCompatActivity() {
         if (firstDigit == null  || secondDigit == null) {
             miniCells[currentCellIdx].text = "-"
         } else {
-            miniCells[currentCellIdx].text = (firstDigit!! * 10 + secondDigit!!).toString()
-            firstDigit = null
-            secondDigit = null
+            val number = firstDigit!! * 10 + secondDigit!!
+            if (miniCells.any { it.text.toString().toIntOrNull()?.let { n -> n == number } ?: false }) {
+                Toast.makeText(this, "Duplicate number!", Toast.LENGTH_SHORT).show()
+                firstDigit = null
+                secondDigit = null
+                return
+            }
+            miniCells[currentCellIdx].text = number.toString()
         }
+        firstDigit = null
+        secondDigit = null
         currentCellIdx++
+
         miniCells[currentCellIdx - 1].background = null
-        if (currentCellIdx < 18) {
-            miniCells[currentCellIdx].background = ContextCompat
-                .getDrawable(this, R.drawable.mini_cell_border_highlight)
+        if (currentCellIdx == miniCells.count()) {
+            currentCellIdx = 0
         }
+        miniCells[currentCellIdx].background = ContextCompat
+            .getDrawable(this, R.drawable.mini_cell_border_highlight)
     }
 
     fun onCancel(view: View) {
@@ -100,7 +109,7 @@ class CreateCardActivity : AppCompatActivity() {
             listOf(mini0, mini1, mini2, mini3, mini4, mini5,
                 mini6, mini7, mini8, mini9, mini10, mini11,
                 mini12, mini13, mini14, mini15, mini16, mini17)
-        }.map { if (it.text == "-" || it.text == "") null else it.text.toString().toUInt() }
+        }.map { if (it.text == "-" || it.text == "") null else it.text.toString().toInt() }
             .toTypedArray()
 
 
