@@ -62,6 +62,20 @@ class NumbersManagerActivity: AppCompatActivity() {
                 numbers[position] = number
                 gridAdapter.notifyDataSetChanged()
             }
+            .setNeutralButton("Insert") { _, _ ->
+                val number = editText.text.toString().toIntOrNull()
+                    ?: return@setNeutralButton showToast("Invalid number!")
+
+                if (number !in 1..99)
+                    return@setNeutralButton showToast("Invalid number!")
+
+                if (numbers.contains(number))
+                    return@setNeutralButton showToast("Duplicate number!")
+
+                numbers.add(position, number)
+                numbers.removeAt(numbers.count() - 1)
+                gridAdapter.notifyDataSetChanged()
+            }
             .setNegativeButton("Cancel", null)
             .show()
 

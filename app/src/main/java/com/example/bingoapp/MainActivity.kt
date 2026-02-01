@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
@@ -175,7 +176,10 @@ class MainActivity : AppCompatActivity() {
         if (numbersJson != null) {
             try {
                 val type = object : TypeToken<List<Int>>() {}.type;
-                numbers.addAll(gson.fromJson<List<Int>>(numbersJson, type))
+                val savedNumbers = gson.fromJson<List<Int>>(numbersJson, type)
+                for (i in 0..<min(numbers.count(), savedNumbers.count())) {
+                    numbers[i] = savedNumbers[i]
+                }
             } catch (e: Exception) {
                 Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
             }
