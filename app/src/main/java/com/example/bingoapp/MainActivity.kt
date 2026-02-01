@@ -5,6 +5,8 @@ import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
@@ -23,9 +25,10 @@ import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
-    // TODO: customize
-    private val blackBoardWidth = 8
-    private val blackBoardHeight = 16
+    private var blackBoardWidth = 8
+    private var blackBoardHeight = 16
+    private var cardHue = 180
+    private var sortingVariant = SortingVariant.MostCrossed
 
     private lateinit var binding: ActivityMainBinding
     private val bingoCards: MutableList<BingoCard> = mutableListOf()
@@ -39,7 +42,11 @@ class MainActivity : AppCompatActivity() {
 
 
     fun resortCards() {
-        bingoCards.sortByDescending { c -> c.markedCount(numbers) }
+        when (sortingVariant) {
+            SortingVariant.Id -> bingoCards.sortBy { it.id }
+            SortingVariant.MostCrossed -> bingoCards.sortBy { it.markedCount(numbers) }
+            SortingVariant.LeastCrossed -> bingoCards.sortByDescending { it.markedCount(numbers) }
+        }
         adapter.notifyDataSetChanged()
     }
 
@@ -65,6 +72,31 @@ class MainActivity : AppCompatActivity() {
                 ?.let { ns -> _numbers.clear(); _numbers.addAll(ns) }
             resortCards()
         }
+    }
+
+    val startForResultMenu = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            val data = it.data ?: return@registerForActivityResult
+
+            blackBoardWidth = data.getIntExtra("width", 8)
+            blackBoardHeight = data.getIntExtra("height", 16)
+            updateNumbersArray()
+
+            cardHue = data.getIntExtra("hue", 180)
+            updateCardHue()
+
+            sortingVariant = data.getStringExtra("sortingVariant")?.let { s -> SortingVariant.from(s) }
+                ?: SortingVariant.MostCrossed
+            resortCards()
+        }
+    }
+
+    private fun updateNumbersArray() {
+
+    }
+
+    private fun updateCardHue() {
+
     }
 
     private fun showAddNumberDialog() {
@@ -129,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onClickEditNumbers(view: View) {
         startForResultNumbers.launch(Intent(this, NumbersManagerActivity::class.java).apply {
-            putIntegerArrayListExtra("numbers", ArrayList(_numbers.map { it.toInt() }))
+            putIntegerArrayListExtra("numbers", ArrayList(_numbers))
             putExtra("width", blackBoardWidth)
             putExtra("height", blackBoardHeight)
         })
@@ -161,6 +193,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         val cardsJson = prefs.getString("cards", null)
         if (cardsJson != null) {
@@ -188,6 +221,27 @@ class MainActivity : AppCompatActivity() {
         adapter = BingoCardMiniAdapter(bingoCards, this)
         binding.rvBingoCards.layoutManager = GridLayoutManager(this, 1)
         binding.rvBingoCards.adapter = adapter
+        resortCards()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                startForResultMenu.launch(Intent(this, MenuActivity::class.java).apply {
+                    putExtra("width", blackBoardWidth)
+                    putExtra("height", blackBoardHeight)
+                    putExtra("hue", cardHue)
+                    putExtra("sortingVariant", sortingVariant.value)
+                })
+                true
+            }
+            else -> true
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
