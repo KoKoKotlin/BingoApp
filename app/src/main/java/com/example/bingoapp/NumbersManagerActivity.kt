@@ -18,6 +18,10 @@ class NumbersManagerActivity: AppCompatActivity() {
     lateinit var gridAdapter: BingoNumberAdapter
     private lateinit var binding: ActivityNumbersManagerBinding
 
+    fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
     private fun showEditDialog(position: Int) {
         val textInputLayout = TextInputLayout(this).apply {
             hint = "Number (1–99)"
@@ -47,16 +51,16 @@ class NumbersManagerActivity: AppCompatActivity() {
             .setView(container)
             .setPositiveButton("Change") { _, _ ->
                 val number = editText.text.toString().toIntOrNull()
-                if (number != null && number in 1..99) {
-                    if (numbers.contains(number)) {
-                        Toast.makeText(this, "Duplicate number!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        numbers[position] = number
-                        gridAdapter.notifyDataSetChanged()
-                    }
-                } else {
-                    Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
-                }
+                    ?: return@setPositiveButton showToast("Invalid number!")
+
+                if (number !in 1..99)
+                    return@setPositiveButton showToast("Invalid number!")
+
+                if (numbers.contains(number))
+                    return@setPositiveButton showToast("Duplicate number!")
+
+                numbers[position] = number
+                gridAdapter.notifyDataSetChanged()
             }
             .setNegativeButton("Cancel", null)
             .show()

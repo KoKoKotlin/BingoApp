@@ -22,34 +22,39 @@ import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {
+    // TODO: customize
+    private val blackBoardWidth = 8
+    private val blackBoardHeight = 16
+
     private lateinit var binding: ActivityMainBinding
     private val bingoCards: MutableList<BingoCard> = mutableListOf()
     private lateinit var adapter: BingoCardMiniAdapter
-    private val _numbers = mutableListOf<Int>()
+    private val _numbers = MutableList(blackBoardWidth * blackBoardHeight) { -1 }
     val numbers: MutableList<Int>
         get() = _numbers
 
     private val gson = Gson()
     private val prefs by lazy { getSharedPreferences("BingoApp", MODE_PRIVATE) }
 
-    // TODO: customize
-    private val blackBoardWidth = 8
-    private val blackBoardHeight = 16
 
     fun resortCards() {
         bingoCards.sortByDescending { c -> c.markedCount(numbers) }
         adapter.notifyDataSetChanged()
     }
 
+    fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val startForResultCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
-            Toast.makeText(this, "New Bingo card created!", Toast.LENGTH_SHORT).show()
+            showToast("New Bingo card created!")
             it.data?.getParcelableExtra("NEW_BINGO_CARD", BingoCard::class.java)
                 ?.let(bingoCards::add)
             resortCards()
         } else {
-            Toast.makeText(this, "Canceled creating a new card!", Toast.LENGTH_SHORT).show()
+            showToast("Canceled creating a new card!")
         }
     }
 
@@ -90,16 +95,19 @@ class MainActivity : AppCompatActivity() {
             .setView(container)
             .setPositiveButton("Add") { _, _ ->
                 val number = editText.text.toString().toIntOrNull()
-                if (number != null && number in 1..99) {
-                    if (_numbers.contains(number)) {
-                        Toast.makeText(this, "Duplicate number!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        _numbers.add(number)
-                        resortCards()
-                    }
-                } else {
-                    Toast.makeText(this, "Invalid number", Toast.LENGTH_SHORT).show()
-                }
+                    ?: return@setPositiveButton showToast("Invalid number!")
+                if (number !in 1..99)
+                    return@setPositiveButton showToast("Invalid number!")
+
+                if (_numbers.contains(number))
+                    return@setPositiveButton showToast("Duplicate number!")
+
+                val index = _numbers.indexOfFirst { it == -1 }
+                if (index == -1)
+                    return@setPositiveButton showToast("Number list is full!")
+
+                _numbers[index] = number
+                resortCards()
             }
             .setNegativeButton("Cancel", null)
             .show()
