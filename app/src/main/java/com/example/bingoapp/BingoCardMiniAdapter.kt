@@ -1,8 +1,12 @@
 package com.example.bingoapp
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
+import androidx.core.graphics.ColorUtils
+import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bingoapp.databinding.BingoCardBinding
 
@@ -41,6 +45,12 @@ class BingoCardMiniAdapter(
             main.onEditCard(position)
         }
         holder.binding.textCardId.text = "Id: ${card.id}"
+
+        holder.binding.bingoCardView.setCardBackgroundColor(main.cardBackgroundColor)
+        val lighterColor = ColorUtils.blendARGB(main.cardBackgroundColor, Color.WHITE, 0.50f)
+        miniCells.forEach {
+            it.setBackgroundColor(lighterColor)
+        }
     }
 
     override fun getItemCount() = cards.size

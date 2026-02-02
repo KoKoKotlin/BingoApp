@@ -1,6 +1,7 @@
 package com.example.bingoapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.InputFilter
@@ -14,6 +15,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bingoapp.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,7 +29,13 @@ import kotlin.math.min
 class MainActivity : AppCompatActivity() {
     private var blackBoardWidth = 8
     private var blackBoardHeight = 16
-    private var cardHue = 180
+    private var _cardHue = 180
+    private var _cardSat = 33
+    private var _cardLig = 55
+
+    val cardBackgroundColor: Int
+        get() = Color.HSVToColor(floatArrayOf(_cardHue.toFloat(), _cardSat.toFloat() / 100f, _cardLig.toFloat() / 100f))
+
     private var sortingVariant = SortingVariant.MostCrossed
 
     private lateinit var binding: ActivityMainBinding
@@ -92,8 +100,10 @@ class MainActivity : AppCompatActivity() {
             blackBoardHeight = data.getIntExtra("height", 16)
             updateNumbersArray()
 
-            cardHue = data.getIntExtra("hue", 180)
-            updateCardHue()
+            _cardHue = data.getIntExtra("hue", 180)
+            _cardSat = data.getIntExtra("sat", 33)
+            _cardLig = data.getIntExtra("lig", 55)
+            adapter.notifyDataSetChanged()
 
             sortingVariant = data.getStringExtra("sortingVariant")?.let { s -> SortingVariant.from(s) }
                 ?: SortingVariant.MostCrossed
@@ -102,10 +112,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateNumbersArray() {
-
-    }
-
-    private fun updateCardHue() {
 
     }
 
@@ -206,6 +212,11 @@ class MainActivity : AppCompatActivity() {
         with(prefs.edit()) {
             putString("cards", gson.toJson(bingoCards))
             putString("numbers", gson.toJson(numbers))
+            putInt("hue", _cardHue)
+            putInt("sat", _cardSat)
+            putInt("lig", _cardLig)
+            putInt("width", blackBoardWidth)
+            putInt("height", blackBoardHeight)
             apply()
         }
     }
@@ -237,6 +248,12 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
             }
         }
+        _cardHue = prefs.getInt("hue", 180)
+        _cardSat = prefs.getInt("sat", 33)
+        _cardLig = prefs.getInt("lig", 55)
+
+        blackBoardWidth = prefs.getInt("width", 8)
+        blackBoardHeight = prefs.getInt("height", 16)
 
         adapter = BingoCardMiniAdapter(bingoCards, this)
         binding.rvBingoCards.layoutManager = GridLayoutManager(this, 1)
@@ -255,7 +272,9 @@ class MainActivity : AppCompatActivity() {
                 startForResultMenu.launch(Intent(this, MenuActivity::class.java).apply {
                     putExtra("width", blackBoardWidth)
                     putExtra("height", blackBoardHeight)
-                    putExtra("hue", cardHue)
+                    putExtra("hue", _cardHue)
+                    putExtra("sat", _cardSat)
+                    putExtra("lig", _cardLig)
                     putExtra("sortingVariant", sortingVariant.value)
                 })
                 true

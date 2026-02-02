@@ -81,14 +81,32 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/tv_hue_label"
+        android:id="@+id/tv_hsl_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Hue (0–360)"
+        android:text="Hue, Saturation, Lightness"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/til_height"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview_menu"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        app:layout_constraintStart_toEndOf="@id/tv_hsl_label"
+        app:layout_constraintTop_toBottomOf="@id/til_height">
+            <FrameLayout style="@style/MiniBingoCell"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView android:id="@+id/mini_menu"
+                    android:text="88"
+                    style="@style/MiniBingoCellText"/>
+                <ImageView android:id="@+id/cross_menu" style="@style/MiniBingoCellCross"/>
+            </FrameLayout>
+    </androidx.cardview.widget.CardView>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/slider_hue"
@@ -104,7 +122,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_hue_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_hsl_label"
+        app:trackHeight="12dp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_sat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:stepSize="1.0"
+        app:tickColorActive="@color/white"
+        android:value="33.0"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"
+        app:labelBehavior="floating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_hue"
+        app:trackHeight="12dp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider_lig"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:stepSize="1.0"
+        app:tickColorActive="@color/white"
+        android:value="55.0"
+        android:valueFrom="0.0"
+        android:valueTo="100.0"
+        app:labelBehavior="floating"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/slider_sat"
         app:trackHeight="12dp" />
 
     <TextView
@@ -114,7 +166,7 @@
         android:layout_marginTop="32dp"
         android:text="Sort cards by"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/slider_hue"
+        app:layout_constraintTop_toBottomOf="@id/slider_lig"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -123,7 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="58dp"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        app:layout_constraintTop_toBottomOf="@id/slider_hue"
+        app:layout_constraintTop_toBottomOf="@id/slider_lig"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:hintEnabled="true"

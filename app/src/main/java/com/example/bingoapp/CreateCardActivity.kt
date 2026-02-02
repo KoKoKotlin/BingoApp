@@ -1,6 +1,7 @@
 package com.example.bingoapp
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import com.example.bingoapp.databinding.ActivityCreateCardBinding
 
 class CreateCardActivity : AppCompatActivity() {
@@ -15,6 +18,7 @@ class CreateCardActivity : AppCompatActivity() {
     private var currentCellIdx: Int = 0
     private var firstDigit: Int? = null
     private var secondDigit: Int? = null
+    private lateinit var highlightDrawable: Drawable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +28,11 @@ class CreateCardActivity : AppCompatActivity() {
 
         val bingoCard = intent.getParcelableExtra("bingo_card", BingoCard::class.java)
 
-        binding.bingoCard.mini0.background = ContextCompat
-            .getDrawable(this, R.drawable.mini_cell_border_highlight)
+        highlightDrawable = ContextCompat
+            .getDrawable(this, R.drawable.mini_cell_border_highlight)!!.mutate()
+        binding.bingoCard.mini0.background = highlightDrawable
         binding.bingoCard.btnDeleteCard.visibility = View.INVISIBLE
+        binding.bingoCard.btnEditCard.visibility = View.INVISIBLE
 
         with(binding) {
             listOf(btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btnNull)
@@ -60,8 +66,7 @@ class CreateCardActivity : AppCompatActivity() {
         miniCells.forEachIndexed { idx, cell ->
             cell.setOnClickListener {
                 miniCells[currentCellIdx].background = null
-                miniCells[idx].background = ContextCompat
-                    .getDrawable(this, R.drawable.mini_cell_border_highlight)
+                miniCells[idx].background = highlightDrawable
                 currentCellIdx = idx
             }
 
@@ -105,8 +110,7 @@ class CreateCardActivity : AppCompatActivity() {
         if (currentCellIdx == miniCells.count()) {
             currentCellIdx = 0
         }
-        miniCells[currentCellIdx].background = ContextCompat
-            .getDrawable(this, R.drawable.mini_cell_border_highlight)
+        miniCells[currentCellIdx].background = highlightDrawable
     }
 
     fun onCancel(view: View) {
