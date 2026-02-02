@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val bingoCards: MutableList<BingoCard> = mutableListOf()
     private lateinit var adapter: BingoCardMiniAdapter
-    private val _numbers = MutableList(blackBoardWidth * blackBoardHeight) { -1 }
+    private var _numbers = MutableList(blackBoardWidth * blackBoardHeight) { -1 }
     val numbers: MutableList<Int>
         get() = _numbers
 
@@ -112,7 +112,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateNumbersArray() {
-
+        val newNumbers = MutableList(blackBoardWidth * blackBoardHeight) { -1 }
+        for (i in 0..<min(newNumbers.size, _numbers.size)) {
+            newNumbers[i] = _numbers[i]
+        }
+        _numbers = newNumbers
     }
 
     private fun showAddNumberDialog() {
@@ -175,6 +179,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun onEditCard(index: Int) {
         if (index >= bingoCards.count())
             return showToast("Failed edition: Index out of range!")
