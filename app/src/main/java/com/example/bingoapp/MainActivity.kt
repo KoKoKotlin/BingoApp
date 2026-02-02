@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     fun resortCards() {
         when (sortingVariant) {
             SortingVariant.Id -> bingoCards.sortBy { it.id }
-            SortingVariant.MostCrossed -> bingoCards.sortBy { it.markedCount(numbers) }
-            SortingVariant.LeastCrossed -> bingoCards.sortByDescending { it.markedCount(numbers) }
+            SortingVariant.MostCrossed -> bingoCards.sortByDescending { it.markedCount(numbers) }
+            SortingVariant.LeastCrossed -> bingoCards.sortBy { it.markedCount(numbers) }
         }
         adapter.notifyDataSetChanged()
     }

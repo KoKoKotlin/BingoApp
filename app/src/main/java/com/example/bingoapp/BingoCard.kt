@@ -9,5 +9,5 @@ class BingoCard(val id: UInt, val values: Array<Int?>): Parcelable {
         if (values.size != 6 * 3) throw IllegalArgumentException("Bingo card needs exactly 18 values!")
     }
 
-    fun markedCount(numbers: List<Int>) = values.filter { numbers.contains(it ?: -1) }.size
+    fun markedCount(numbers: List<Int>) = values.filter { numbers.contains(it ?: -2) }.size
 }
