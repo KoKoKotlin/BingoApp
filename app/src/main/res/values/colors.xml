@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="teal_600">#66B2B2</color>
     <color name="red_600">#FF0000</color>
+    <color name="green_600">#32A852</color>
     <color name="black_board">#274c43</color>
     <color name="chalk_green">#2E4F4F</color>
     <color name="chalk_text">#F5F5F5</color>

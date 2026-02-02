@@ -57,9 +57,19 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     val startForResultCard = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
-            showToast("New Bingo card created!")
-            it.data?.getParcelableExtra("NEW_BINGO_CARD", BingoCard::class.java)
-                ?.let(bingoCards::add)
+            val position = it.data?.getIntExtra("position", -1) ?: -1
+
+            if (position == -1) {
+                it.data?.getParcelableExtra("bingo_card", BingoCard::class.java)
+                    ?.let(bingoCards::add)
+                showToast("New Bingo card created!")
+            } else {
+                if (position >= bingoCards.count())
+                    return@registerForActivityResult showToast("Position index out of range!")
+                val card = it.data?.getParcelableExtra("bingo_card", BingoCard::class.java)
+                    ?: return@registerForActivityResult showToast("Failed edition card!")
+                bingoCards[position] = card
+            }
             resortCards()
         } else {
             showToast("Canceled creating a new card!")
@@ -157,6 +167,16 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    fun onEditCard(index: Int) {
+        if (index >= bingoCards.count())
+            return showToast("Failed edition: Index out of range!")
+
+        startForResultCard.launch(Intent(this, CreateCardActivity::class.java).apply {
+            putExtra("position", index)
+            putExtra("bingo_card", bingoCards[index])
+        })
     }
 
     fun onClickEditNumbers(view: View) {

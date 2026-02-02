@@ -37,6 +37,9 @@ class BingoCardMiniAdapter(
         holder.binding.btnDeleteCard.setOnClickListener {
             main.onDeleteCard(position)
         }
+        holder.binding.btnEditCard.setOnClickListener {
+            main.onEditCard(position)
+        }
         holder.binding.textCardId.text = "Id: ${card.id}"
     }
 

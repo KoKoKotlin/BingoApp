@@ -22,6 +22,7 @@ class CreateCardActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        val bingoCard = intent.getParcelableExtra("bingo_card", BingoCard::class.java)
 
         binding.bingoCard.mini0.background = ContextCompat
             .getDrawable(this, R.drawable.mini_cell_border_highlight)
@@ -63,6 +64,15 @@ class CreateCardActivity : AppCompatActivity() {
                     .getDrawable(this, R.drawable.mini_cell_border_highlight)
                 currentCellIdx = idx
             }
+
+            if (bingoCard != null) {
+                cell.text = bingoCard.values[idx]?.toString() ?: "-"
+            }
+        }
+
+        if (bingoCard != null) {
+            binding.bingoCardId.setText(bingoCard.id.toString())
+            binding.btnCreateCard.text = "Edit Card"
         }
     }
 
@@ -119,9 +129,11 @@ class CreateCardActivity : AppCompatActivity() {
             return
         }
 
+        val position = intent.getIntExtra("position", -1)
         val bingoCard = BingoCard(id, values)
         val intentResult = Intent().apply {
-            putExtra("NEW_BINGO_CARD", bingoCard)
+            putExtra("bingo_card", bingoCard)
+            putExtra("position", position)
         }
         setResult(RESULT_OK, intentResult)
         finish()

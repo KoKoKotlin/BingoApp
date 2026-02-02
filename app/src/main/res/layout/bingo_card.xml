@@ -116,6 +116,22 @@
                 app:iconPadding="0dp"
                 app:iconTint="@android:color/white"
                 app:strokeWidth="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_card"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="bottom|start"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:backgroundTint="@color/green_600"
+                app:icon="@android:drawable/ic_menu_edit"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp"
+                app:iconTint="@android:color/white"
+                app:strokeWidth="0dp" />
         </FrameLayout>
     </androidx.cardview.widget.CardView>
     <TextView
